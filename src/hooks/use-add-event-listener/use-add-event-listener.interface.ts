@@ -1,5 +1,7 @@
 export declare namespace IUseAddEventListener {
-  export type Target = { current: any } | `selector:${string}`;
+  export type SelectorString = `selector:${string}`;
+
+  export type Target = { current: any } | SelectorString;
 
   export interface DomEventRequiredInfo<K extends keyof HTMLElementEventMap> {
     target: Target;

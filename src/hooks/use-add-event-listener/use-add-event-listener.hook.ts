@@ -25,7 +25,7 @@ export function useAddEventListener<K extends keyof HTMLElementEventMap, T exten
     return true;
   }
 
-  function isTargetSelector(value: any): value is `selector:${string}` {
+  function isTargetSelector(value: any): value is IUseAddEventListener.SelectorString {
     if (typeof value !== 'string') return false;
     if (!value.startsWith(`selector:`)) return false;
     if (value.length <= 10) return false;
