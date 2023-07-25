@@ -21,7 +21,8 @@ export default function Page() {
   useAddEventListener({
     windowEventRequiredInfo: {
       eventName: 'resize',
-      eventListener(ev) {
+      eventListener(event) {
+        console.log('@event', event);
         console.log('@window.innerWidth', window.innerWidth);
         console.log('@window.innerHeight', window.innerHeight);
         console.log('@timestamp', timestamp);
