@@ -43,13 +43,27 @@ export function useAddEventListener<K extends keyof HTMLElementEventMap, T exten
         } = domEventRequiredInfo;
 
         if (isTargetRef(target)) {
-          if (savedDomEventRequiredInfoRef.current !== undefined) target.current.removeEventListener(savedDomEventRequiredInfoRef.current.eventName, fixedCallbackRef.current);
           target.current.removeEventListener(eventName, fixedCallbackRef.current);
         } else if (isTargetSelector(target)) {
           const element = document.querySelector<HTMLElement>(target.replace(`selector:`, ''));
-          if (savedDomEventRequiredInfoRef.current !== undefined) element?.removeEventListener(savedDomEventRequiredInfoRef.current.eventName, fixedCallbackRef.current);
           element?.removeEventListener(eventName, fixedCallbackRef.current);
         } 
+      }
+
+      if (savedDomEventRequiredInfoRef.current !== undefined) {
+        const {
+          target,
+          eventName,
+          eventListener,
+          options,
+        } = savedDomEventRequiredInfoRef.current;
+
+        if (isTargetRef(target)) {
+          target.current.removeEventListener(eventName, fixedCallbackRef.current);
+        } else if (isTargetSelector(target)) {
+          const element = document.querySelector<HTMLElement>(target.replace(`selector:`, ''));
+          element?.removeEventListener(eventName, fixedCallbackRef.current);
+        }
       }
     };
     removeEvent();
@@ -89,13 +103,22 @@ export function useAddEventListener<K extends keyof HTMLElementEventMap, T exten
           options,
         } = windowEventRequiredInfo;
 
-        if (savedWindowEventRequiredInfoRef.current !== undefined) window.removeEventListener(savedWindowEventRequiredInfoRef.current.eventName, fixedCallbackRef.current);
+        window.removeEventListener(eventName, fixedCallbackRef.current);
+      }
+
+      if (savedWindowEventRequiredInfoRef.current !== undefined && typeof window !== 'undefined') {
+        const {
+          eventName,
+          eventListener,
+          options,
+        } = savedWindowEventRequiredInfoRef.current;
+
         window.removeEventListener(eventName, fixedCallbackRef.current);
       }
     };
     removeEvent();
 
-    if (windowEventRequiredInfo !== undefined) {
+    if (windowEventRequiredInfo !== undefined && typeof window !== 'undefined') {
       const {
         eventName,
         eventListener,
@@ -116,6 +139,6 @@ export function useAddEventListener<K extends keyof HTMLElementEventMap, T exten
   }, [windowEventRequiredInfo?.eventName, windowEventRequiredInfo?.eventListener,windowEventRequiredInfo?.options]);
 
   return {
-    
+
   };
 }
