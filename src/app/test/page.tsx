@@ -8,11 +8,24 @@ export default function Page() {
   const [timestamp, setTimestamp] = useState<number>();
 
   useAddEventListener({
-    targetElementRef: buttonRef,
-    eventName: `click`,
-    eventListener(event) {
-      console.log('@@click.event', event);
-      console.log('@timestamp', timestamp);
+    domEventRequiredInfo: {
+      target: buttonRef,
+      eventName: 'click',
+      eventListener(event) {
+        console.log('@@click.event', event);
+        console.log('@timestamp', timestamp);
+      },
+    },
+  });
+
+  useAddEventListener({
+    windowEventRequiredInfo: {
+      eventName: 'resize',
+      eventListener(ev) {
+        console.log('@window.innerWidth', window.innerWidth);
+        console.log('@window.innerHeight', window.innerHeight);
+        console.log('@timestamp', timestamp);
+      },
     },
   });
 

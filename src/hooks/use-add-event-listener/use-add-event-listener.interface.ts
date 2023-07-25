@@ -1,8 +1,21 @@
 export declare namespace IUseAddEventListener {
-  export interface Props {
-    targetElementRef: { current: any };
-    eventName: keyof HTMLElementEventMap;
-    eventListener: (event: any) => void;
-    isApply?: boolean;
+  export type Target = { current: any } | `selector:${string}`;
+
+  export interface DomEventRequiredInfo<K extends keyof HTMLElementEventMap> {
+    target: Target;
+    eventName: K;
+    eventListener: (event: HTMLElementEventMap[K]) => any;
+    options?: boolean | AddEventListenerOptions;
+  }
+
+  export interface WindowEventRequiredInfo<T extends keyof WindowEventMap> {
+    eventName: T;
+    eventListener: (event: WindowEventMap[T]) => any;
+    options?: boolean | AddEventListenerOptions;
+  }
+
+  export interface Props<K extends keyof HTMLElementEventMap, T extends keyof WindowEventMap> {
+    domEventRequiredInfo?: DomEventRequiredInfo<K>;
+    windowEventRequiredInfo?: WindowEventRequiredInfo<T>;
   }
 }
