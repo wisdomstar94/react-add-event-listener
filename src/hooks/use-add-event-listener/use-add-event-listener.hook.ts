@@ -33,8 +33,6 @@ export function useAddEventListener<K extends keyof HTMLElementEventMap, T exten
   }
 
   useEffect(() => {
-    console.log('@domEventRequiredInfo 로 eventListener 재할당..', domEventRequiredInfo);
-
     const removeEvent = () => {
       if (domEventRequiredInfo !== undefined) {
         const {
@@ -92,15 +90,11 @@ export function useAddEventListener<K extends keyof HTMLElementEventMap, T exten
   }, [domEventRequiredInfo?.target, domEventRequiredInfo?.eventName, domEventRequiredInfo?.eventListener, domEventRequiredInfo?.options]);
 
   useEffect(() => {
-    console.log('@domEventRequiredInfo 재할당..', domEventRequiredInfo);
-
     savedDomEventRequiredInfoRef.current = domEventRequiredInfo;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [domEventRequiredInfo?.target, domEventRequiredInfo?.eventName, domEventRequiredInfo?.eventListener, domEventRequiredInfo?.options]);
 
   useEffect(() => {
-    console.log('@windowEventRequiredInfo 로 eventListener 재할당..', windowEventRequiredInfo);
-
     const removeEvent = () => {
       if (windowEventRequiredInfo !== undefined && typeof window !== 'undefined') {
         const {
@@ -140,7 +134,6 @@ export function useAddEventListener<K extends keyof HTMLElementEventMap, T exten
   }, [windowEventRequiredInfo?.eventName, windowEventRequiredInfo?.eventListener, windowEventRequiredInfo?.options]);
 
   useEffect(() => {
-    console.log('@windowEventRequiredInfo 재할당..', windowEventRequiredInfo);
     savedWindowEventRequiredInfoRef.current = windowEventRequiredInfo;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [windowEventRequiredInfo?.eventName, windowEventRequiredInfo?.eventListener, windowEventRequiredInfo?.options]);
