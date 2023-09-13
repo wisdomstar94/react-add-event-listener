@@ -19,7 +19,7 @@ export function useAddEventListener<K extends keyof HTMLElementEventMap, T exten
     }
   });
 
-  function isTargetRef(value: any): value is { current: HTMLElement } {
+  function isTargetRef(value: any): value is { current: HTMLElement | null } {
     if (typeof value !== 'object') return false;
     if (value.current === undefined) return false;
     return true;
@@ -43,7 +43,7 @@ export function useAddEventListener<K extends keyof HTMLElementEventMap, T exten
         } = domEventRequiredInfo;
 
         if (isTargetRef(target)) {
-          target.current.removeEventListener(eventName, fixedCallbackRef.current);
+          target.current?.removeEventListener(eventName, fixedCallbackRef.current);
         } else if (isTargetSelector(target)) {
           const element = document.querySelector<HTMLElement>(target.replace(`selector:`, ''));
           element?.removeEventListener(eventName, fixedCallbackRef.current);
@@ -59,7 +59,7 @@ export function useAddEventListener<K extends keyof HTMLElementEventMap, T exten
         } = savedDomEventRequiredInfoRef.current;
 
         if (isTargetRef(target)) {
-          target.current.removeEventListener(eventName, fixedCallbackRef.current);
+          target.current?.removeEventListener(eventName, fixedCallbackRef.current);
         } else if (isTargetSelector(target)) {
           const element = document.querySelector<HTMLElement>(target.replace(`selector:`, ''));
           element?.removeEventListener(eventName, fixedCallbackRef.current);
@@ -76,7 +76,7 @@ export function useAddEventListener<K extends keyof HTMLElementEventMap, T exten
         options,
       } = domEventRequiredInfo;
       if (isTargetRef(target)) {
-        target.current.addEventListener(eventName, fixedCallbackRef.current, options);
+        target.current?.addEventListener(eventName, fixedCallbackRef.current, options);
       } else if (isTargetSelector(target)) {
         const element = document.querySelector<HTMLElement>(target.replace(`selector:`, ''));
         element?.addEventListener(eventName, fixedCallbackRef.current, options);
