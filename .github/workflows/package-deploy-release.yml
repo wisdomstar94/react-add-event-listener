@@ -38,7 +38,7 @@ jobs:
       - run: rm -rf ./.eslintrc.json
       - run: mv ./lib/src ./src
       - run: rm -rf ./lib
-      - run: npm publish
+      # - run: npm publish
       - run: npm publish --access=public
         env:
           # NODE_AUTH_TOKEN: ${{secrets.PACKAGE_PUBLISH_KEY_GITHUB}}
